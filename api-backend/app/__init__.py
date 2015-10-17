@@ -2,7 +2,7 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 import os, sys
 
-def check_environment():
+"""def check_environment():
 	environment_dependencies = [
 		"ENV",
 		"DATABASE_URL"
@@ -15,10 +15,10 @@ def check_environment():
 	if not can_run:
 		sys.exit()
 
-check_environment()
+check_environment()"""
 
 app = Flask(__name__)
-app.config.from_object(os.environ['ENV'])
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://postgres:qazsedcft@localhost:5432/boilermake"
 db = SQLAlchemy(app)
 
 from models import *
