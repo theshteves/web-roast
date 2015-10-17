@@ -1,5 +1,5 @@
 from app import app, db
-from flask import request, abort, jsonify, render_template
+from flask import session, request, abort, jsonify, render_template
 from models import *
 
 def normalize_url(url):
