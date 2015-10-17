@@ -22,10 +22,4 @@ app.config.from_object(os.environ['ENV'])
 db = SQLAlchemy(app)
 
 from models import *
-
-@app.route('/')
-def hello():
-	return "Hello world!"
-
-if __name__ == '__main__':
-	app.run()
+from views import *

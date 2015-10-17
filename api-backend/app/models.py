@@ -11,7 +11,7 @@ class Site(db.Model):
     url = db.Column(db.String(128), index=True)
 
     def __init__(self, url):
-    	self.url = url
+    	self.url = url.lower()
 
     def __repr__(self):
     	return '<id {} url {}>'.format(self.id, self.url)
@@ -31,9 +31,9 @@ class User(db.Model):
 		return bcrypt.check_password_hash(self.password_hash, password)
 
 	def __init__(self, username, email, password):
-		self.username = username
-		self.email = email
-		self.password_hash = hash_password(password)
+		self.username = username.lower()
+		self.email = email.lower()
+		self.password_hash = self.hash_password(password)
 
 	def __repr__(self):
 		return '<username {}>'.format(self.username)
