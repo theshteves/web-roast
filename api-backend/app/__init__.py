@@ -19,6 +19,7 @@ check_environment()"""
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://postgres:qazsedcft@localhost:5432/boilermake"
+#app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = True
 db = SQLAlchemy(app)
 
 from models import *
