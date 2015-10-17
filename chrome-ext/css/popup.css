@@ -6,7 +6,8 @@ body {
 }
 
 .container {
-    width: 100%;
+    width: calc(100%-20px);
+    margin: 10px;
     text-align: center;
 }
 
@@ -21,4 +22,6 @@ body {
 
 .disabled {
 	display: none;
+	margin: 0px;
+	padding: 0px;
 }
