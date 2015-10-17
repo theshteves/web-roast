@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+
+  "name": "boilermake-extension",
+  "description": "Lfdaknfdsa;knfdsfds",
+  "version": "0.1",
+  "icons": {"19": "img/icon.png", "38": "img/icon.png", "512": "img/logo.png"},
+  "browser_action": {
+    "default_icon": "img/icon.png",
+    "default_title": "boilermake-extension",
+    "default_popup": "html/popup.html"
+  },
+  "permissions": [
+    "tabs"
+  ],
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+  "commands": {
+    // Add keyboard shortcuts here
+  }
+}
