@@ -1,0 +1,130 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+#particles-js {
+  width: 100%;
+  height: 630px;
+  background-color: #225378;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#main {
+  display: flex;
+  display: -webkit-flex;
+  justify-content: space-around;
+  -webkit-justify-content: space-around;
+  align-items: center;
+  -webkit-align-items: center;
+  width: 100%;
+  height: 500px;
+  background-color: #1595A3;
+}
+
+::-webkit-input-placeholder {
+  color: #225378;
+  font-family: 'Hind';
+  font-weight: 600;
+  font-size: 17px;
+}
+
+input:focus::-webkit-input-placeholder {
+  color: #ACF0F2;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: #225378;
+  font-size: 17px;
+  font-family: 'Hind';
+  font-weight: 600;
+}
+
+input:-moz-placeholder {
+  color: #ACF0F2;
+}
+
+::-moz-placeholder {  /* Firefox 19 */
+  color: #225378;
+  font-family: 'Hind';
+  font-weight: 600;
+  font-size: 17px;
+}
+
+input:focus::-moz-placeholder {
+  color: #ACF0F2;
+}
+
+:-ms-input-placeholder { 
+  color: #225378;
+  font-size: 17px;
+  font-family: 'Hind';
+  font-weight: 600;
+}
+
+input:focus:-ms-input-placeholder {
+  color: #ACF0F2;
+}
+
+input {
+  border-radius: 3px;
+  border-style: none;
+  background-color: #ACF0F2;
+  box-shadow: 0 0 5px transparent;
+  border: 1px solid transparent;
+  line-height: 1.70em;
+  padding-left: 15px;
+  font-family: 'Hind';
+  font-weight: 600;
+  font-size: 17px;
+  color: #225378;
+  width: 500px;
+  height: 54px;
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  outline: none;
+}
+
+input[type=text]:focus, textarea:focus {
+  box-shadow: 0 0 5px #F2FFE3;
+  border: 1px solid #F2FFE3;
+  background-color: #225378;
+  color: #ACF0F2;
+}
+
+#stats-wrap {
+  display: flex;
+  display: -webkit-flex; 
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  margin-top: 20px;
+}
+
+
+.stat-links {
+  text-decoration: none;
+  width: 217.5px; 
+  padding: 14px 15px;
+  color: #225378;
+  font-family: 'Hind';
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 0 5px transparent;
+  border: 1px solid transparent;
+  background-color: #ACF0F2;
+  border-radius: 3px;
+  flex-grow: 0;
+  -webkit-transition: all 0.50s ease-in-out;
+  -moz-transition: all 0.50s ease-in-out;
+  -ms-transition: all 0.50s ease-in-out;
+  -o-transition: all 0.50s ease-in-out;
+}
+
+.stat-links:hover {
+  background-color: #225378;
+  border: 1px solid #F2FFE3;
+  color: #ACF0F2;
+}

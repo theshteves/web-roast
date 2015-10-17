@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="Bogdan Pozderca">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Hind:400,300,500,600' rel='stylesheet' type='text/css'>
+    <title>Dat Site</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+  </head>
+  <body>    
+    <div id="particles-js"></div>	
+    <div id="main">
+      <form>
+        <div id="choice-wrap">
+          <input type="text" placeholder="Search for a url's statistics"></input>
+	  <div id="stats-wrap">
+            <a id="top25" class="stat-links" href="">Top 25</a>
+	    <a id="trending" class="stat-links" href="">Trending Now</a>
+          </div>
+        </div>
+      </form>
+    </di>
+
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}" type="text/javascript"></script>
+  </body>
+</html>
