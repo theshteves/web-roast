@@ -25,3 +25,104 @@ body {
 	margin: 0px;
 	padding: 0px;
 }
+
+::-webkit-input-placeholder {
+  color: #225378;
+  font-family: 'Hind';
+  font-weight: 600;
+  font-size: 17px;
+}
+
+input:focus::-webkit-input-placeholder {
+  color: #ACF0F2;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: #225378;
+  font-size: 17px;
+  font-family: 'Hind';
+  font-weight: 600;
+}
+
+input:-moz-placeholder {
+  color: #ACF0F2;
+}
+
+::-moz-placeholder {  /* Firefox 19 */
+  color: #225378;
+  font-family: 'Hind';
+  font-weight: 600;
+  font-size: 17px;
+}
+
+input:focus::-moz-placeholder {
+  color: #ACF0F2;
+}
+
+:-ms-input-placeholder { 
+  color: #225378;
+  font-size: 17px;
+  font-family: 'Hind';
+  font-weight: 600;
+}
+
+input:focus:-ms-input-placeholder {
+  color: #ACF0F2;
+}
+
+input {
+  border-radius: 3px;
+  border-style: none;
+  background-color: #ACF0F2;
+  box-shadow: 0 0 5px transparent;
+  border: 1px solid transparent;
+  line-height: 1.70em;
+  padding-left: 15px;
+  font-family: 'Hind';
+  font-weight: 600;
+  font-size: 17px;
+  color: #225378;
+  width: 200px;
+  height: 54px;
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  outline: none;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+input[type=text]:focus, input[type=password]:focus, textarea:focus {
+  border: 1px solid #F2FFE3;
+  background-color: #225378;
+  color: #ACF0F2;
+}
+
+#login-submit {
+  border-radius: 3px;
+  border-style: none;
+  background-color: #FFAD0F;
+  box-shadow: 0 0 5px transparent;
+  border: 1px solid transparent;
+  line-height: 1.70em;
+  text-align: center;
+  font-family: 'Hind';
+  font-weight: 600;
+  font-size: 17px;
+  color: #F2FFE3;
+  width: 200px;
+  height: 54px;
+  -webkit-transition: all 0.50s ease-in-out;
+  -moz-transition: all 0.50s ease-in-out;
+  -ms-transition: all 0.50s ease-in-out;
+  -o-transition: all 0.50s ease-in-out;
+}
+
+#login-submit:hover {
+  background-color: rgba(255, 173, 15, .8);
+}
+
+#login-password, #login-submit{
+	margin-top: 15px;
+}
