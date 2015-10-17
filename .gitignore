@@ -1,7 +1,7 @@
 # Server logs
-*/logs
-nginx.error.logs
-nginx.access.logs
+#*/logs
+#nginx.error.log
+#nginx.access.log
 
 
 # because Mac
