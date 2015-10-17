@@ -43,6 +43,25 @@ def register_user():
 
 	return make_json_response({'data':{'succeeded': True, 'message': "User created successfully"}}, 201)
 
+
+@app.route('/api/login', methods = ['POST'])
+def login_user():
+	username = request.json.get('username')
+	password = request.json.get('password')
+	if session.get('logged_in') is (False or None):
+		if username is None or password is None:
+			return make_json_response({'data':{'succeeded': False, 'message': "Missing required parameters"}}, 400)
+		user = User.query.filter_by(username=username).first()
+		if user is None:
+			return make_json_response({'data':{'succeeded': False, 'message': "User does not exist"}}, 400)
+		if user.check_password(password):
+			session['logged_in'] = True
+			return make_json_response({'data':{'succeeded': True, 'message': "You're logged in!"}}, 201)
+		else:
+			return make_json_response({'data':{'succeeded': False, 'message': "You're password is wrong"}}, 201)
+	else:
+		return make_json_response({'data':{'succeeded': session.get('logged_in'), 'message': "You're already logged in"}}, 201)
+
 @app.route('/api/vote', methods = ['POST'])
 # Force authentication
 def vote():
