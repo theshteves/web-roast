@@ -1,5 +1,5 @@
 # because Mac
-*/.DS_Store
+.DS_Store
 
 *.pyc
 */venv
