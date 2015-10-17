@@ -1,5 +1,5 @@
 from app import app, db
-from flask import session, request, abort, jsonify
+from flask import request, abort, jsonify, render_template
 from models import *
 
 def normalize_url(url):
@@ -19,6 +19,10 @@ def make_json_response(json, status_code=200):
 	resp = jsonify(json)
 	resp.status_code = status_code
 	return resp
+
+@app.route('/')
+def index():
+	return render_template('index.html')
 
 @app.route('/api/users', methods = ['POST'])
 def register_user():

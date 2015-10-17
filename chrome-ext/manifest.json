@@ -14,7 +14,7 @@
     "tabs"
   ],
   "background": {
-    "scripts": ["js/background.js"]
+    "scripts": ["js/jQuery.js","js/background.js"]
   },
   "commands": {
     // Add keyboard shortcuts here
