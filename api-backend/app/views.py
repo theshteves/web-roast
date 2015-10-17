@@ -20,6 +20,11 @@ def make_json_response(json, status_code=200):
 	resp.status_code = status_code
 	return resp
 
+@app.errorhandler(500)
+def internal_error(exception):
+       	app.logger.error(exception)
+       	return render_template('error.html'), 500
+
 @app.route('/')
 def index():
 	return render_template('index.html')
