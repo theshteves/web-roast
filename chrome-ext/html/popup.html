@@ -1,12 +1,25 @@
 <html>
     <head>
         <script src="../js/popup.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="../css/popup.css">
     </head>
     <body>
         <div class="container">
-	        <span class='btn blue' id="up">Up</span>
-	        <span class='btn red' id="down">Down</span>
+            <div id="vote-arrows" class="disabled">
+                <span class='btn' id="up"><i class="fa fa-chevron-up"></i></span>
+    	        <span class='btn' id="down"><i class="fa fa-chevron-down"></i></span>
+            </div>
+            <div id="sign-in" class="">
+                    Username: <input id="register-username" name="register-username" type="text">
+                    Email: <input id="register-email" name="register-email" type="text">
+                    Password: <input id="register-password" name="register-password" type="password">
+                    <button type="button" id="register-submit" name="register-submit">Register</button>
+                    <br>
+                    Username: <input id="login-username" name="login-username" type="text">
+                    Password: <input id="login-password" name="login-password" type="password">
+                    <button id="login-submit" type="button" name="login-submit">Login</button>
+            </div>
         </div>
     </body>
 </html>

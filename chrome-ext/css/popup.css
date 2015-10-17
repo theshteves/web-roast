@@ -1,5 +1,8 @@
 body {
-    min-width: 300px;
+	background-color: #225378;
+	font: 'Hind' sans-serif;
+	padding: 0;
+	margin: 0;
 }
 
 .container {
@@ -9,27 +12,11 @@ body {
 
 .btn {
     display: inline-block;
-	border-radius: 5px;
 	cursor: pointer;
 	padding: 5px;
 	margin: 5px;
 	color: white;
 	-webkit-user-select: none;
-}
-
-.green {
-	background-color: rgb(110, 200, 110);
-	box-shadow: 0px 3px 0px 0px rgba(85, 170, 85, 1);
-}
-
-.red {
-	background-color: rgb(220, 80, 80);
-	box-shadow: 0px 3px 0px 0px rgba(180, 70, 65, 1);
-}
-
-.blue {
-	background-color: rgb(40, 80, 210);
-	box-shadow: 0px 3px 0px 0px rgba(15, 65, 185, 1);
 }
 
 .disabled {
