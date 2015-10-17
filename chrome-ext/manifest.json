@@ -11,10 +11,12 @@
     "default_popup": "html/popup.html"
   },
   "permissions": [
-    "tabs"
+    "tabs",
+    "http://webroast.club/",
+    "https://webroast.club/"
   ],
   "background": {
-    "scripts": ["js/jQuery.js","js/background.js"]
+    "scripts": ["js/background.js"]
   },
   "commands": {
     // Add keyboard shortcuts here
