@@ -10,4 +10,4 @@ nginx.access.log
 ### Python
 *.pyc
 */app_env/
-
+*/venv
