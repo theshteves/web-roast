@@ -44,9 +44,10 @@ function check_logged_in() {
 }
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    if (changeInfo.url) {
+    if (changeInfo.url && changeInfo.url.substr(0,4) === 'http') {
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://webroast.club/api/site/" + encodeURIComponent(changeInfo.url), true);
+        url = changeInfo.url.substr(changeInfo.url.indexOf('://') + 3)
+        xhr.open("GET", "http://webroast.club/api/site/" + encodeURIComponent(url), true);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
