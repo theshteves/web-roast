@@ -54,7 +54,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
                 if (xhr.status === 201) {
                     json = JSON.parse(xhr.responseText);
                     chrome.browserAction.setBadgeText({
-                        text: json.data.score,
+                        text: json.data.score.toString(),
                         tabId: tabId
                     })
                 }
