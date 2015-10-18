@@ -161,5 +161,5 @@ def logout():
 @app.route('/api/check', methods=['POST'])
 def check():
 	if not 'username' in session:
-		return make_json_response({'data':{'succeeded': True, 'logged_in'=False}}, 201)
-	return return make_json_response({'data':{'succeeded': True, 'logged_in'=True}}, 201)
+		return make_json_response({'data':{'succeeded': True, 'logged_in':False}}, 201)
+	return make_json_response({'data':{'succeeded': True, 'logged_in':True}}, 201)
