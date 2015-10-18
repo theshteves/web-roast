@@ -145,10 +145,20 @@ def comments():
 	if exists_site(site):
 		site_id = get_site_id(site)
 		comments = Comment.query(site_id = site_id).all()
-		for comment in comments:
-			comment.user = User.query.filter_by(id = comment.user_id).first()
+		for c in comments:
+			c.user = User.query.filter_by(id = c.user_id).first()
 		## MAP COMMENTS HERE
-		return make_json_response({'data':{'succeeded': True, 'comments':comments}}, 201)
+		comments_map = []
+		for c in comments:
+			comments_map.append(   {
+		      "id": c.id,
+		      "user": c.user.username,
+		      "comment": c.comment,
+		      "replyTo": c.reply_to,
+		      "timeStamp": c.time_stamp
+   			})
+
+		return make_json_response({'data':{'succeeded': True, 'comments':comments_map}}, 201)
 	else:
 		return make_json_response({'data':{'succeeded': True, 'comments':[]]}}, 201)
 
@@ -178,4 +188,4 @@ def get(url):
 				score -= 1
 		return make_json_response({'data':{'succeeded':True, 'score':score}}, 201)
 	else:
-		return make_json_response({'data':{'succeeded':True, 'score':0}}, 201)			
+		return make_json_response({'data':{'succeeded':True, 'score':0}}, 201)
