@@ -8,7 +8,7 @@ function vote(upvote) {
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
-                update_badge(tabs[0].id, url)
+                update_badge()
             }
         }
         xhr.send(JSON.stringify({
@@ -117,27 +117,33 @@ function loadComments(url) {//load comments
     }));
 }
 
-function update_badge(tabId, url) {
-    if (url && url.substr(0,4) === 'http') {
-        var xhr = new XMLHttpRequest();
-        url = url.substr(url.indexOf('://') + 3)
-        xhr.open("GET", "http://webroast.club/api/site/" + encodeURIComponent(url), true);
-        xhr.setRequestHeader("Content-type", "application/json");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 201) {
-                    json = JSON.parse(xhr.responseText);
-                    chrome.browserAction.setBadgeText({
-                        text: json.data.score.toString(),
-                        tabId: tabId
-                    })
+function update_badge() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        var url = tabs[0].url
+        var tabId = tabs[0].id
+        if (url && url.substr(0,4) === 'http') {
+            var xhr = new XMLHttpRequest();
+            url = url.substr(url.indexOf('://') + 3)
+            xhr.open("GET", "http://webroast.club/api/site/" + encodeURIComponent(url), true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        json = JSON.parse(xhr.responseText);
+                        chrome.browserAction.setBadgeText({
+                            text: json.data.score.toString(),
+                            tabId: tabId
+                        })
+                    }
                 }
             }
+            xhr.send();
         }
-        xhr.send();
-    }
+    });
 }
 
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    update_badge(tabId, changeInfo.url)
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.msg === 'page-load') {
+        update_badge()
+        sendResponse({msg: "EVENT HANDLED"});
+    }
 });

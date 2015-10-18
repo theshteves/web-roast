@@ -1,0 +1,1 @@
+chrome.runtime.sendMessage({ msg: 'page-load'}, function(response) {});

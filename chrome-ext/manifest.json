@@ -10,6 +10,12 @@
     "default_title": "boilermake-extension",
     "default_popup": "html/login.html"
   },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/content.js"]
+    }
+  ],
   "permissions": [
     "tabs",
     "http://webroast.club/*",
