@@ -1,12 +1,32 @@
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Hind:300,400,500,600">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Hind:100,200,300,400,500,600,700,800,900">
     <link rel="stylesheet" type="text/css" href="../css/index.css">
-    <script type="text/javascript" src="../js/index.js"></script>
+<!--    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>-->
+    <script type="text/javascript" src="../js/popup.js"></script>
+    <!--<script type="text/javascript" src="../js/comments.js"></script>-->
   </head>
   <body>
-    <h1>Comment Section</h1>
+    <div class="vote">
+      <img id="vote+" src="../img/up.png"></img>
+      <img id="vote-" src="../img/down.png"></img>
+      <h3>{{ url }}</h3>
+    </div>
+    <div class="comment">
+      <h5>Nico Vergara</h5>
+      <h6>2:46 PM</h6>
+      <h3>hahaha why do I even bother?</h3>
+    </div>
+    <div class="comment">
+      <h5>Steven Kneiser</h5>
+      <h6>11:21 AM</h6>
+      <h3>Loooooooool this page <br>...sux.</h3>
+    </div>
+    <div class="comment">
+      <h5>{{ comment.user }}</h5>
+      <h6>{{ comment.timestamp }}</h6>
+      <h3>{{ comment.comment }}</h3>
+    </div>
   </body>
 </html>
