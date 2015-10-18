@@ -141,3 +141,15 @@ textarea:focus {
     background-color: #225378;
     color: #ACF0F2;
 }
+
+.nav-tabs>li>a,
+.nav-tabs>li>a:focus {
+    color: #ACF0F2;
+}
+.nav-tabs>li>a:hover {
+    background-color: #225378;
+}
+
+ul {
+    background-color: #1595A3;
+}
