@@ -121,7 +121,7 @@ def vote():
 	if not 'username' in session:
 		return make_json_response({'data':{'succeeded': False, 'message':"You must be logged in to vote"}}, 403)
 	url = normalize_url(request.json.get('url'))
-	user = User.query.filter_by(username = escape(session['usename'])).first()
+	user = User.query.filter_by(username = escape(session['username'])).first()
 	if user is None:
 		logout()
 		return make_json_response({'data':{'succeeded': False, 'message':"Invalid user session, please try logging in again"}}, 403)

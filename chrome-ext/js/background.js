@@ -1,5 +1,23 @@
 comments = []
 
+function vote(upvote) {
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    var url = tabs[0].url
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://webroast.club/api/vote", true);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            console.log(xhr.responseText);
+        }
+    }
+    xhr.send(JSON.stringify({
+        upvote: upvote,
+        url: url
+    }));
+  });
+}
+
 function register(username, email, password) {
     console.log("Sending register request");
     var xhr = new XMLHttpRequest();

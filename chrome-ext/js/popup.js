@@ -12,12 +12,21 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 
 	if (document.getElementById('login-submit')) {
-			document.getElementById('login-submit').addEventListener('click', function() {
+		document.getElementById('login-submit').addEventListener('click', function() {
 			var username = document.getElementById('login-username').value
 			document.getElementById('login-username').value = ""
 			var password = document.getElementById('login-password').value
 			document.getElementById('login-password').value = ""
 			chrome.extension.getBackgroundPage().login(username, password);
+		});
+	}
+
+	if (document.getElementById('upvote')) {
+		document.getElementById('upvote').addEventListener('click', function() {
+			chrome.extension.getBackgroundPage().vote(true)
+		});
+		document.getElementById('downvote').addEventListener('click', function() {
+			chrome.extension.getBackgroundPage().vote(false)
 		});
 	}
 });
