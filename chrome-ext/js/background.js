@@ -1,4 +1,3 @@
-logged_in = false;
 comments = []
 
 function register(username, email, password) {
@@ -23,7 +22,6 @@ function login(username, password) {
     xhr.open("POST", "http://159.203.97.105:5000/api/login", true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
-            location.href = "/comments.html"
         }
     }
     xhr.send(JSON.stringify({
@@ -83,3 +81,24 @@ function loadComments(url) {//load comments
         url: url,
     }));
 }
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    if (changeInfo.url && changeInfo.url.substr(0,4) === 'http') {
+        var xhr = new XMLHttpRequest();
+        url = changeInfo.url.substr(changeInfo.url.indexOf('://') + 3)
+        xhr.open("GET", "http://webroast.club/api/site/" + encodeURIComponent(url), true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 201) {
+                    json = JSON.parse(xhr.responseText);
+                    chrome.browserAction.setBadgeText({
+                        text: json.data.score,
+                        tabId: tabId
+                    })
+                }
+            }
+        }
+        xhr.send();
+    }
+});

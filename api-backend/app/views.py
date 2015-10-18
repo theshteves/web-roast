@@ -160,7 +160,7 @@ def comments():
 
 		return make_json_response({'data':{'succeeded': True, 'comments':comments_map}}, 201)
 	else:
-		return make_json_response({'data':{'succeeded': True, 'comments':[]]}}, 201)
+		return make_json_response({'data':{'succeeded': True, 'comments':[]}}, 201)
 
 @app.route('/api/logout', methods=['POST'])
 def logout():
@@ -173,7 +173,7 @@ def check():
 		return make_json_response({'data':{'succeeded': True, 'logged_in':False}}, 201)
 	return make_json_response({'data':{'succeeded': True, 'logged_in':True}}, 201)
 
-@app.route('/api/site/<url>', methods=['GET'])
+@app.route('/api/site/<path:url>', methods=['GET'])
 def get(url):
 	url = normalize_url(url)
 	site = Site(url=url)
