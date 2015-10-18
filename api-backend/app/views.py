@@ -132,15 +132,13 @@ def vote():
 		db.session.add(new_site)
 		db.session.commit()
 		site = new_site
-	vote = Vote.query.fiter_by(user_id = user.id, site_id = site.id).first()
+	vote = Vote.query.filter_by(user_id = user.id, site_id = site.id).first()
 	if vote is not  None:
 		db.session.delete(vote)
 		db.session.commit()
 	vote = Vote(site.id, user.id, upvote)
 	db.session.add(vote)
 	db.session.commit()
-
-
 	return make_json_response({'data':{'succeeded': True, 'message': "Vote created succesfully"}}, 201)
 
 @app.route('/api/comments', methods = ['GET'])
