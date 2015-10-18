@@ -1,5 +1,3 @@
-logged_in = false;
-
 function register(username, email, password) {
     console.log("Sending register request");
     var xhr = new XMLHttpRequest();
@@ -44,3 +42,23 @@ function check_logged_in() {
     }
     xhr.send('{}');
 }
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    if (changeInfo.url) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://webroast.club/api/site/" + encodeURIComponent(changeInfo.url), true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 201) {
+                    json = JSON.parse(xhr.responseText);
+                    chrome.browserAction.setBadgeText({
+                        text: json.data.score,
+                        tabId: tabId
+                    })
+                }
+            }
+        }
+        xhr.send();
+    }
+});
