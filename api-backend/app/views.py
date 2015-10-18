@@ -20,6 +20,22 @@ def make_json_response(json, status_code=200):
 	resp.status_code = status_code
 	return resp
 
+def add_site(site):
+	try:
+		db.session.add(site)
+		db.session.commit()
+		return Site.query.filter_by(url = site.url).first().id
+	except Exception as e:
+		return make_json_response({'data':{'succeeded': False, 'message': "Unable to add site"}}, 400)
+
+def exists_site(site):
+	if Site.query.filter_by(url = site.url).first() is None:
+		return False
+	return True
+
+def get_site_id(site):
+	return Site.query.filter_by(url = site.url).first().id
+
 @app.errorhandler(500)
 def internal_error(exception):
        	app.logger.error(exception)
@@ -70,7 +86,7 @@ def login_user():
 				session['logged_in'] = user
 				return make_json_response({'data':{'succeeded': True, 'message': "You're logged in!"}}, 201)
 			else:
-				return make_json_response({'data':{'succeeded': False, 'message': "You're password is wrong"}}, 201)
+				return make_json_response({'data':{'succeeded': False, 'message': "You're password is wrong"}}, 400)
 		else:
 			return make_json_response({'data':{'succeeded': session.get('logged_in'), 'message': "You're already logged in"}}, 201)
 	except Exception as e:
@@ -94,3 +110,17 @@ def vote():
 	db.session.commmit()
 
 	return make_json_response({'data':{'succeeded': True, 'message': "Vote created succesfully"}}, 201)
+
+@app.route('/api/comments', methods = ['POST'])
+def comments():
+	url = normalize_url(request.json.get('url'))
+	site = Site(url=url)
+	exists_site(site)
+	if exists_site():
+		site_id = get_site_id(site)
+		comments = Comment.query(site_id = site_id).all()
+		for comment in comments:
+			comment.user = User.query.filter_by(id = comment.user_id)
+		return comments
+	else:
+		return None

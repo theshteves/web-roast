@@ -11,7 +11,7 @@ class Site(db.Model):
     url = db.Column(db.String(128), index=True)
 
     def __init__(self, url):
-    	self.url = url.lower()
+    	self.url = url
 
     def __repr__(self):
     	return '<id {} url {}>'.format(self.id, self.url)
@@ -45,13 +45,33 @@ class Vote(db.Model):
 	site_id = db.Column(db.Integer, db.ForeignKey('sites.id'), index=True)
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'), index=True)
 	upvote = db.Column(db.Boolean)
-	date = db.Column(db.DateTime)
+	time_stamp = db.Column(db.Integer)
 
 	def __init__(self, site_id, user_id, upvote):
 		self.site_id = site_id
 		self.user_id = user_id
 		self.upvote = upvote
-		self.date = datetime.utcnow()
+		self.time_stamp = datetime.utcnow()
+
+	def __repr__(self):
+		return '<id {}>'.format(self.id)
+
+class Comment(db.Model):
+	__tablename__ = 'comments'
+
+	id = db.Column(db.Integer, primary_key=True)
+	site_id = db.Column(db.Integer, db.ForeignKey('sites.id'), index=True)
+	user_id = db.Column(db.Integer, db.ForeignKey('users.id'), index=True)
+	comment = db.Column(db.String)
+    reply_to = db.Column(db.Integer)
+	time_stamp = db.Column(db.Integer)
+
+	def __init__(self, site_id, user_id, comment, reply_to):
+		self.site_id = site_id
+		self.user_id = user_id
+		self.comment = comment
+        self.reply_to = reply_to
+		self.time_stamp = datetime.utcnow()
 
 	def __repr__(self):
 		return '<id {}>'.format(self.id)
