@@ -1,21 +1,40 @@
 comments = []
 
 function vote(upvote) {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    var url = tabs[0].url
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://webroast.club/api/vote", true);
-    xhr.setRequestHeader("Content-type", "application/json");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            console.log(xhr.responseText);
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        var url = tabs[0].url
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://webroast.club/api/vote", true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                update_badge(tabs[0].id, url)
+            }
         }
-    }
-    xhr.send(JSON.stringify({
-        upvote: upvote,
-        url: url
-    }));
-  });
+        xhr.send(JSON.stringify({
+            upvote: upvote,
+            url: url
+        }));
+    });
+}
+
+function comment(text, reply_to) {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        var url = tabs[0].url
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://webroast.club/api/comments", true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                // DISPLAY NEW COMMENT WITHOUT NEED TO REFRESH
+            }
+        }
+        xhr.send(JSON.stringify({
+            comment: text,
+            reply_to: reply_to,
+            url: url
+        }));
+    });
 }
 
 function register(username, email, password) {
@@ -98,10 +117,10 @@ function loadComments(url) {//load comments
     }));
 }
 
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    if (changeInfo.url && changeInfo.url.substr(0,4) === 'http') {
+function update_badge(tabId, url) {
+    if (url && url.substr(0,4) === 'http') {
         var xhr = new XMLHttpRequest();
-        url = changeInfo.url.substr(changeInfo.url.indexOf('://') + 3)
+        url = url.substr(url.indexOf('://') + 3)
         xhr.open("GET", "http://webroast.club/api/site/" + encodeURIComponent(url), true);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function() {
@@ -117,4 +136,8 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
         }
         xhr.send();
     }
+}
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    update_badge(tabId, changeInfo.url)
 });

@@ -21,6 +21,16 @@ document.addEventListener("DOMContentLoaded", function() {
 		});
 	}
 
+	if (document.getElementById('comment-submit')) {
+		document.getElementById('comment-submit').addEventListener('click', function() {
+			var comment = document.getElementById('comment').value
+			document.getElementById('comment').value = ""
+			var reply_to = document.getElementById('reply_to').value
+			document.getElementById('reply_to').value = ""
+			chrome.extension.getBackgroundPage().comment(comment, reply_to);
+		});
+	}
+
 	if (document.getElementById('upvote')) {
 		document.getElementById('upvote').addEventListener('click', function() {
 			chrome.extension.getBackgroundPage().vote(true)
