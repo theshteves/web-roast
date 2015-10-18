@@ -160,7 +160,7 @@ def comments():
 
 		return make_json_response({'data':{'succeeded': True, 'comments':comments_map}}, 201)
 	else:
-		return make_json_response({'data':{'succeeded': True, 'comments':[]]}}, 201)
+		return make_json_response({'data':{'succeeded': True, 'comments':[]}}, 201)
 
 @app.route('/api/logout', methods=['POST'])
 def logout():
