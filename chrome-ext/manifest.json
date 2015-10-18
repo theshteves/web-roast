@@ -12,8 +12,8 @@
   },
   "permissions": [
     "tabs",
-    "http://webroast.club/",
-    "https://webroast.club/"
+    "http://webroast.club/*",
+    "https://webroast.club/*"
   ],
   "background": {
     "scripts": ["js/background.js"]
