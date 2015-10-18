@@ -7,7 +7,9 @@ document.addEventListener("DOMContentLoaded", function() {
 			document.getElementById('register-email').value = ""
 			var password = document.getElementById('register-password').value
 			document.getElementById('register-password').value = ""
-			chrome.extension.getBackgroundPage().register(username, email, password);
+			var password_confirmation = document.getElementById('register-password-confirmation').value
+			document.getElementById('register-password').value = ""
+			chrome.extension.getBackgroundPage().register(username, email, password, password_confirmation);
 		});
 	}
 

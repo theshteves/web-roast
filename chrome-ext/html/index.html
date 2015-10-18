@@ -1,32 +1,61 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Hind:100,200,300,400,500,600,700,800,900">
     <link rel="stylesheet" type="text/css" href="../css/index.css">
-<!--    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>-->
     <script type="text/javascript" src="../js/popup.js"></script>
-    <!--<script type="text/javascript" src="../js/comments.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="../css/popup.css">
   </head>
   <body>
-    <div class="vote">
+    <ul class="nav nav-tabs">
+      <li role="presentation"class="active"><a href="./index.html">Roast</a></li>
+      <li role="presentation"><a href="./login.html">Login</a></li>
+      <li role="presentation"><a href="./register.html">Register</a></li>
+      <span class='btn' id="upvote"><i class="fa fa-chevron-up"> Up Vote</i></span>
+      <span class='btn' id="downvote"><i class="fa fa-chevron-down"> Down Vote</i></span>
+    </ul>
+<!--     <div class="vote">
       <img id="vote+" src="../img/up.png"></img>
       <h1>{{ url.votes }}</h1>
       <img id="vote-" src="../img/down.png"></img>
-    </div>
-    <div class="comment">
-      <h5>Nico Vergara</h5>
-      <h6>2:46 PM</h6>
-      <h3>hahaha why do I even bother?</h3>
-    </div>
-    <div class="comment">
-      <h5>Steven Kneiser</h5>
-      <h6>11:21 AM</h6>
-      <h3>Loooooooool this page <br>...sux.</h3>
-    </div>
-    <div class="comment">
-      <h5>{{ comment.user }}</h5>
-      <h6>{{ comment.timestamp }}</h6>
-      <h3>{{ comment.comment }}</h3>
+    </div> -->
+    <div class="container">
+      <div id="make-comment">
+        <textarea id="comment" name="comment" type="textarea" placeholder="Your Comment"></textarea>
+        <div>
+          <input id="reply_to" name="reply_to" type="text" placeholder="Replying to? e.g. 7">
+          <button id="comment-submit" type="button" name="comment-submit">Send</button>                        
+        </div>
+      </div>
+      <div class="comment top-comment">
+        <div class="comment-wrap">
+          <h5>Nico Vergara</h5>
+          <h6>2:46 PM</h6>
+          <p>hahaha why do I even bother?</p>
+          <div class="comment">
+            <div class="comment-wrap">
+              <h5>Steven Kneiser</h5>
+              <h6>11:21 AM</h6>
+              <p>Loooooooool this page <br>...sux.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="comment">
+        <div class="comment-wrap">
+          <h5>Steven Kneiser</h5>
+          <h6>11:21 AM</h6>
+          <p>Loooooooool this page <br>...sux.</p>
+        </div>
+      </div>
+      <div class="comment">
+        <div class="comment-wrap">
+          <h5>{{ comment.user }}</h5>
+          <h6>{{ comment.timestamp }}</h6>
+          <p>{{ comment.comment }}</p>
+        </div>
+      </div>
     </div>
   </body>
 </html>

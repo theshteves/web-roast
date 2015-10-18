@@ -37,7 +37,7 @@ function comment(text, reply_to) {
     });
 }
 
-function register(username, email, password) {
+function register(username, email, password, password_confirmation) {
     console.log("Sending register request");
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "http://webroast.club/api/users", true);
@@ -50,7 +50,8 @@ function register(username, email, password) {
     xhr.send(JSON.stringify({
         username: username,
         email: email,
-        password: password
+        password: password,
+        password1: password_confirmation
     }));
 }
 
