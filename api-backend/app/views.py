@@ -107,11 +107,11 @@ def login_user():
 				return make_json_response({'data':{'succeeded': False, 'message': "User does not exist"}}, 400)
 			if user.check_password(password):
 				session['username'] = user.username
-				return make_json_response({'data':{'succeeded': True, 'message': "You're logged in!"}}, 201)
+				return make_json_response({'data':{'succeeded': True, 'message': "You're logged in!"}}, 200)
 			else:
 				return make_json_response({'data':{'succeeded': False, 'message': "You're password is wrong"}}, 400)
 		else:
-			return make_json_response({'data':{'succeeded': True, 'message': "You're already logged in"}}, 201)
+			return make_json_response({'data':{'succeeded': True, 'message': "You're already logged in"}}, 200)
 
 	except Exception as e:
 		return handle_invalid_response(e) #raise InvalidUsage('This view is gone', status_code=410)
@@ -186,9 +186,9 @@ def comments(url):
 		      "timeStamp": c.time_stamp
    			})
 
-		return make_json_response({'data':{'succeeded': True, 'comments':comments_map}}, 201)
+		return make_json_response({'data':{'succeeded': True, 'comments':comments_map}}, 200)
 	else:
-		return make_json_response({'data':{'succeeded': True, 'comments':[]}}, 201)
+		return make_json_response({'data':{'succeeded': True, 'comments':[]}}, 200)
 
 @app.route('/api/logout', methods=['POST'])
 def logout():
@@ -198,8 +198,8 @@ def logout():
 @app.route('/api/check', methods=['POST'])
 def check():
 	if not 'username' in session:
-		return make_json_response({'data':{'succeeded': True, 'logged_in':False}}, 201)
-	return make_json_response({'data':{'succeeded': True, 'logged_in':True}}, 201)
+		return make_json_response({'data':{'succeeded': True, 'logged_in':False}}, 200)
+	return make_json_response({'data':{'succeeded': True, 'logged_in':True}}, 200)
 
 @app.route('/api/site/<path:url>', methods=['GET'])
 def get_votes(url):
@@ -214,6 +214,6 @@ def get_votes(url):
 				score += 1
 			else:
 				score -= 1
-		return make_json_response({'data':{'succeeded':True, 'score':score}}, 201)
+		return make_json_response({'data':{'succeeded':True, 'score':score}}, 200)
 	else:
-		return make_json_response({'data':{'succeeded':True, 'score':0}}, 201)
+		return make_json_response({'data':{'succeeded':True, 'score':0}}, 200)

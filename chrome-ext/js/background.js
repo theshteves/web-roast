@@ -88,7 +88,7 @@ function loadComments(url) {//load comments
     xhr.open("GET", "http://webroast.club/api/comments", true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
-            if (xhr.status === 201) {
+            if (xhr.status === 200) {
                 json = JSON.parse(xhr.responseText)
                 data = json.data.comments
                 data.sort(function(x, y){
