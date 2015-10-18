@@ -141,9 +141,9 @@ def vote():
 	db.session.commit()
 	return make_json_response({'data':{'succeeded': True, 'message': "Vote created succesfully"}}, 201)
 
-@app.route('/api/comments', methods = ['GET'])
+@app.route('/api/comments/<path:url>', methods = ['GET'])
 def comments():
-	url = normalize_url(request.json.get('url'))
+	url = normalize_url(url)
 	site = Site(url=url)
 	if exists_site(site):
 		site_id = get_site_id(site)
