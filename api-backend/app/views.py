@@ -23,7 +23,7 @@ def make_json_response(json, status_code=200):
 @app.errorhandler(500)
 def internal_error(exception):
        	app.logger.error(exception)
-       	return render_template('error.html'), 500
+       	return render_template('error.html', error = repr(exception)), 500
 
 @app.route('/')
 def index():
@@ -50,7 +50,7 @@ def register_user():
 		db.session.add(user)
 		db.session.commit()
 	except Exception as e:
-		return render_template('error.html', error = str(e))
+		return render_template('error.html', error = repr(e))
 
 	return make_json_response({'data':{'succeeded': True, 'message': "User created successfully"}}, 201)
 
