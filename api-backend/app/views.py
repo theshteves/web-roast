@@ -107,12 +107,12 @@ def login_user():
 			if user is None:
 				return make_json_response({'data':{'succeeded': False, 'message': "User does not exist"}}, 400)
 			if user.check_password(password):
-				session['logged_in'] = user
+				session['username'] = user.username
 				return make_json_response({'data':{'succeeded': True, 'message': "You're logged in!"}}, 201)
 			else:
 				return make_json_response({'data':{'succeeded': False, 'message': "You're password is wrong"}}, 400)
 		else:
-			return make_json_response({'data':{'succeeded': session.get('logged_in'), 'message': "You're already logged in"}}, 201)
+			return make_json_response({'data':{'succeeded': True, 'message': "You're already logged in"}}, 201)
 
 	except Exception as e:
 		return handle_invalid_response(e) #raise InvalidUsage('This view is gone', status_code=410)
