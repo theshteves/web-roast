@@ -41,4 +41,10 @@ document.addEventListener("DOMContentLoaded", function() {
 			chrome.extension.getBackgroundPage().vote(false)
 		});
 	}
+
+	chrome.extension.getBackgroundPage().loadComments(function(comment_string) {
+		var baby = document.createElement('div');
+		baby.innerHTML = comment_string;
+		document.getElementById('container').appendChild(baby)
+	})
 });
