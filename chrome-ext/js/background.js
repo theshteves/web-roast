@@ -71,9 +71,9 @@ function login(username, password) {
 
 function checkIfHasReply(objToPushTo, idToCheck,data){
     for(j=0;j<data.length;j++){
-        if (idToCheck == data[j].reply_to) {
+        if (idToCheck == data[j].replyTo) {
             name = idToUser(data[j]);
-            date = time_stamp.toDate(data[j].time_stamp) + " | " + time_stamp.toTime(data[j].time_stamp)
+            date = toDate(data[j].timeStamp) + " | " + toTime(data[j].timeStamp)
             tempObj = {comment_id:data[j].id, user:name, date:date,comment:data[j].comment, replies:[]};
             objToPushTo.replies.push(tempObj);
         }
@@ -83,39 +83,85 @@ function checkIfHasReply(objToPushTo, idToCheck,data){
     }
 }
 
+function toDate(timeStamp) {
+    d = new Date(parseInt(timeStamp))
+    return d.getMonth()+1 + "." + d.getUTCDate() + "." + d.getFullYear().toString().substr(2)
+}
+
+function toTime(timeStamp){
+    d = new Date(parseInt(timeStamp))
+    var hh = d.getHours();
+    var m = d.getMinutes();
+    var s = d.getSeconds();
+    var dd = "AM";
+    var h = hh;
+    if (h >= 12) {
+        h = hh-12;
+        dd = "PM";
+    }
+    if (h == 0) {
+        h = 12;
+    }
+    m = m<10?"0"+m:m;
+
+    s = s<10?"0"+s:s;
+
+    var pattern = new RegExp("0?"+hh+":"+m+":"+s);
+
+    var replacement = h+":"+m;
+
+    replacement += ":"+s;  
+    replacement += " "+dd;    
+
+    return replacement;
+}
+
+function populateComments(comments) {
+    comment_string = ""
+    for(i=0;i<comments.length;i++){
+        comment_string += '<div class="comment"><div class="comment-wrap"><h5>'+ comments[i].user+'</h5><h6>'+comment[i].date+'</h6><p>'+comment[i].comment+'</p></div></div>'
+    }
+    console.log(comment_string)
+} 
 
 function loadComments(url) {//load comments
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://webroast.club/api/comments", true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                json = JSON.parse(xhr.responseText)
-                data = json.data.comments
-                data.sort(function(x, y){
-                    if ( x.reply_to - y.reply_to === 0){
-                        return y.time_stamp - x.time_stamp
-                    } else {
-                        return y.reply_to - x.reply_to;
+    var comments = [];
+    if (url && url.substr(0,4) === 'http') {
+        url = url.substr(url.indexOf('://') + 3)
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://webroast.club/api/comments/" + encodeURIComponent(url), true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    json = JSON.parse(xhr.responseText)
+                    data = json.data.comments
+                    data.sort(function(x, y){
+                        if ( x.replyTo - y.replyTo === 0){
+                            return y.timeStamp - x.timeStamp
+                        } else {
+                            return y.replyTo - x.replyTo;
+                        }
+                    })
+                    for(i=0;i<data.length;i++){
+                        if (data[i].replyTo == -1){
+                            name = data[i].user
+                            date = toDate(data[i].timeStamp) + " | " + toTime(data[i].timeStamp)
+                            tempObj = {comment_id:data[i].id, user:name, date:date,comment:data[i].comment, replies:[]}
+                            comments.push(tempObj)
+                        }
                     }
-                })
-                for(i=0;i<data.length;i++){
-                    if (data[i].reply_to == 0){
-                        name = data[i].user
-                        date = time_stamp.toDate(data[i].time_stamp) + " | " + time_stamp.toTime(data[i].time_stamp)
-                        tempObj = {comment_id:data[i].id, user:name, date:date,comment:data[i].comment, replies:[]}
-                        comments.push(tempObj)
+                    for(i=0;i<comments.length;i++){
+                        checkIfHasReply(comments[i], comments[i].comment_id, data)
                     }
                 }
-                for(i=0;i<comments.length;i++){
-                    checkIfHasReply(comments[i], comments[i].comment_id, data)
-                }
+                console.log(comments)
+                populateComments(comments)
             }
         }
+        xhr.send(JSON.stringify({
+            url: url,
+        }));
     }
-    xhr.send(JSON.stringify({
-        url: url,
-    }));
 }
 
 function update_badge() {
