@@ -3,7 +3,6 @@ from flask import session, request, abort, jsonify, render_template, escape
 from models import *
 
 def normalize_url(url):
-	url = url.lower()
 	prefix_index = url.find('://')
 	if prefix_index > -1:
 		url = url[prefix_index+3:]
@@ -139,19 +138,19 @@ def vote():
 
 	return make_json_response({'data':{'succeeded': True, 'message': "Vote created succesfully"}}, 201)
 
-@app.route('/api/comments', methods = ['POST'])
+@app.route('/api/comments', methods = ['GET'])
 def comments():
 	url = normalize_url(request.json.get('url'))
 	site = Site(url=url)
-	exists_site(site)
-	if exists_site():
+	if exists_site(site):
 		site_id = get_site_id(site)
 		comments = Comment.query(site_id = site_id).all()
 		for comment in comments:
-			comment.user = User.query.filter_by(id = comment.user_id)
-		return comments
+			comment.user = User.query.filter_by(id = comment.user_id).first()
+		## MAP COMMENTS HERE
+		return make_json_response({'data':{'succeeded': True, 'comments':comments}}, 201)
 	else:
-		return None
+		return make_json_response({'data':{'succeeded': True, 'comments':[]]}}, 201)
 
 @app.route('/api/logout', methods=['POST'])
 def logout():
@@ -163,3 +162,20 @@ def check():
 	if not 'username' in session:
 		return make_json_response({'data':{'succeeded': True, 'logged_in':False}}, 201)
 	return make_json_response({'data':{'succeeded': True, 'logged_in':True}}, 201)
+
+@app.route('/api/site/<url>', methods=['GET'])
+def get(url):
+	url = normalize_url(url)
+	site = Site(url=url)
+	if exists_site(site):
+		site_id = get_site_id(site)
+		votes = Votes.query(site_id = site_id).all()
+		score = 0
+		for vote in votes:
+			if vote.upvote:
+				score += 1
+			else:
+				score -= 1
+		return make_json_response({'data':{'succeeded':True, 'score':score}}, 201)
+	else:
+		return make_json_response({'data':{'succeeded':True, 'score':0}}, 201)			
