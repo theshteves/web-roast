@@ -19,11 +19,34 @@ def make_json_response(json, status_code=200):
 	resp = jsonify(json)
 	resp.status_code = status_code
 	return resp
+'''
+class InvalidUsage(Exception):
+    status_code = 400
+
+    def __init__(self, message, status_code=None, payload=None):
+        Exception.__init__(self)
+        self.message = message
+        if status_code is not None:
+            self.status_code = status_code
+        self.payload = payload
+
+    def to_dict(self):
+        rv = dict(self.payload or ())
+        rv['message'] = self.message
+        return rv
+'''
 
 @app.errorhandler(500)
 def internal_error(exception):
        	app.logger.error(exception)
-       	return render_template('error.html', error = repr(exception)), 500
+       	return render_template('error.html', error=repr(exception)), 500
+'''
+def handle_invalid_usage(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
+    app.logger.error("BRUH:\n\n" + response)
+    return render_template("error.html"), 500
+'''
 
 @app.route('/')
 def index():
@@ -49,8 +72,9 @@ def register_user():
 		user = User(username=username, email=email, password=password)
 		db.session.add(user)
 		db.session.commit()
+
 	except Exception as e:
-		return render_template('error.html', error = repr(e))
+		return handle_invalid_response(e) # raise InvalidUsage('This view is gone', status_code=410)
 
 	return make_json_response({'data':{'succeeded': True, 'message': "User created successfully"}}, 201)
 
@@ -60,21 +84,22 @@ def login_user():
 	username = request.json.get('username')
 	password = request.json.get('password')
 	try:
-		if session.get('logged_in') is None:
-			if username is None or password is None:
-				return make_json_response({'data':{'succeeded': False, 'message': "Missing required parameters"}}, 400)
-			user = User.query.filter_by(username=username).first()
-			if user is None:
-				return make_json_response({'data':{'succeeded': False, 'message': "User does not exist"}}, 400)
-			if user.check_password(password):
-				session['logged_in'] = user
-				return make_json_response({'data':{'succeeded': True, 'message': "You're logged in!"}}, 201)
-			else:
-				return make_json_response({'data':{'succeeded': False, 'message': "You're password is wrong"}}, 201)
-		else:
-			return make_json_response({'data':{'succeeded': session.get('logged_in'), 'message': "You're already logged in"}}, 201)
+                if session.get('logged_in') is None:
+                        if username is None or password is None:
+                                return make_json_response({'data':{'succeeded': False, 'message': "Missing required parameters"}}, 400)
+                        user = User.query.filter_by(username=username).first()
+                        if user is None:
+                                return make_json_response({'data':{'succeeded': False, 'message': "User does not exist"}}, 400)
+                        if user.check_password(password):
+                                session['logged_in'] = user
+                                return make_json_response({'data':{'succeeded': True, 'message': "You're logged in!"}}, 201)
+                        else:
+                                return make_json_response({'data':{'succeeded': False, 'message': "You're password is wrong"}}, 201)
+                else:
+                        return make_json_response({'data':{'succeeded': session.get('logged_in'), 'message': "You're already logged in"}}, 201)
+
 	except Exception as e:
-		return render_template('error.html', error = str(e))
+		return handle_invalid_response(e) #raise InvalidUsage('This view is gone', status_code=410)
 
 @app.route('/api/vote', methods = ['POST'])
 # Force authentication
