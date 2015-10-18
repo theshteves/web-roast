@@ -142,15 +142,14 @@ def vote():
 	return make_json_response({'data':{'succeeded': True, 'message': "Vote created succesfully"}}, 201)
 
 @app.route('/api/comments/<path:url>', methods = ['GET'])
-def comments():
+def comments(url):
 	url = normalize_url(url)
 	site = Site(url=url)
 	if exists_site(site):
 		site_id = get_site_id(site)
-		comments = Comment.query(site_id = site_id).all()
+		comments = Comment.query.filter_by(site_id = site_id).all()
 		for c in comments:
-			c.user = User.query.filter_by(id = c.user_id).first()
-		## MAP COMMENTS HERE
+			c.user = User.query.filter_by(id = c.user_id).first()	
 		comments_map = []
 		for c in comments:
 			comments_map.append(   {
