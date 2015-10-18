@@ -141,7 +141,7 @@ def vote():
 	db.session.commit()
 	return make_json_response({'data':{'succeeded': True, 'message': "Vote created succesfully"}}, 201)
 
-@app.route('/api/comment', methods = ['POST'])
+@app.route('/api/comments', methods = ['POST'])
 def comment():
 	if not 'username' in session:
 		return make_json_response({'data':{'succeeded': False, 'message':"You must be logged in to comment"}}, 403)
@@ -151,7 +151,7 @@ def comment():
 		logout()
 		return make_json_response({'data':{'succeeded': False, 'message':"Invalid user session, please try logging in again"}}, 403)
 	text = request.json.get('comment')
-	reply_to = request.json.get('reply-to')
+	reply_to = request.json.get('reply_to')
 	if reply_to == "":
 		reply_to = -1
 	else:
