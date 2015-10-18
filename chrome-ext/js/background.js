@@ -3,7 +3,8 @@ comments = []
 function register(username, email, password) {
     console.log("Sending register request");
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://159.203.97.105:5000/api/users", true);
+    xhr.open("POST", "http://webroast.club/api/users", true);
+    xhr.setRequestHeader("Content-type", "application/json");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             console.log(xhr.responseText);
@@ -19,24 +20,15 @@ function register(username, email, password) {
 function login(username, password) {
     console.log("Sending login request");
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://159.203.97.105:5000/api/login", true);
+    xhr.open("POST", "http://webroast.club/api/login", true);
+    xhr.setRequestHeader("Content-type", "application/json");
     xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-        }
+        if (xhr.readyState === 4) {}
     }
     xhr.send(JSON.stringify({
         username: username,
         password: password
     }));
-}
-
-function check_logged_in() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://159.203.97.105:5000/api/check", true);
-    xhr.onreadystatechange = function(data) {
-
-    }
-    xhr.send();
 }
 
 function checkIfHasReply(objToPushTo, idToCheck,data){
@@ -56,25 +48,31 @@ function checkIfHasReply(objToPushTo, idToCheck,data){
 
 function loadComments(url) {//load comments
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://159.203.97.105:5000/api/comments", true);
+    xhr.open("GET", "http://webroast.club/api/comments", true);
     xhr.onreadystatechange = function() {
-        data.sort(function(x, y){
-            if ( x.reply_to - y.reply_to === 0){
-                return y.time_stamp - x.time_stamp
-            } else {
-                return y.reply_to - x.reply_to;
+        if (xhr.readyState === 4) {
+            if (xhr.status === 201) {
+                json = JSON.parse(xhr.responseText)
+                data = json.data.comments
+                data.sort(function(x, y){
+                    if ( x.reply_to - y.reply_to === 0){
+                        return y.time_stamp - x.time_stamp
+                    } else {
+                        return y.reply_to - x.reply_to;
+                    }
+                })
+                for(i=0;i<data.length;i++){
+                    if (data[i].reply_to == 0){
+                        name = data[i].user
+                        date = time_stamp.toDate(data[i].time_stamp) + " | " + time_stamp.toTime(data[i].time_stamp)
+                        tempObj = {comment_id:data[i].id, user:name, date:date,comment:data[i].comment, replies:[]}
+                        comments.push(tempObj)
+                    }
+                }
+                for(i=0;i<comments.length;i++){
+                    checkIfHasReply(comments[i], comments[i].comment_id, data)
+                }
             }
-        })
-        for(i=0;i<data.length;i++){
-            if (data[i].reply_to == 0){
-                name = data[i].user
-                date = time_stamp.toDate(data[i].time_stamp) + " | " + time_stamp.toTime(data[i].time_stamp)
-                tempObj = {comment_id:data[i].id, user:name, date:date,comment:data[i].comment, replies:[]}
-                comments.push(tempObj)
-            }
-        }
-        for(i=0;i<comments.length;i++){
-            checkIfHasReply(comments[i], comments[i].comment_id, data)
         }
     }
     xhr.send(JSON.stringify({
