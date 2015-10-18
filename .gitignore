@@ -1,3 +1,9 @@
+# Server logs
+#*/logs
+#nginx.error.log
+#nginx.access.log
+
+
 # because Mac
 .DS_Store
 

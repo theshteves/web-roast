@@ -20,6 +20,11 @@ def make_json_response(json, status_code=200):
 	resp.status_code = status_code
 	return resp
 
+@app.errorhandler(500)
+def internal_error(exception):
+       	app.logger.error(exception)
+       	return render_template('error.html'), 500
+
 @app.route('/')
 def index():
 	return render_template('index.html')
@@ -29,17 +34,20 @@ def register_user():
 	username = request.json.get('username')
 	password = request.json.get('password')
 	email    = request.json.get('email')
-	if username is None or password is None or email is None:
-		return make_json_response({'data':{'succeeded': False, 'message': "Missing required parameters"}}, 400)
-	username = username.lower()
-	email    = email.lower()
-	if User.query.filter_by(username=username).first() is not None:
-		return make_json_response({'data':{'succeeded': False, 'message': "Username already exists"}}, 400)
-	if User.query.filter_by(username=username).first() is not None:
-		return make_json_response({'data':{'succeeded': False, 'message': "Email already exists"}}, 400)
-	user = User(username=username, email=email, password=password)
-	db.session.add(user)
-	db.session.commit()
+	try:
+		if username is None or password is None or email is None:
+			return make_json_response({'data':{'succeeded': False, 'message': "Missing required parameters"}}, 400)
+		username = username.lower()
+		email    = email.lower()
+		if User.query.filter_by(username=username).first() is not None:
+			return make_json_response({'data':{'succeeded': False, 'message': "Username already exists"}}, 400)
+		if User.query.filter_by(username=username).first() is not None:
+			return make_json_response({'data':{'succeeded': False, 'message': "Email already exists"}}, 400)
+		user = User(username=username, email=email, password=password)
+		db.session.add(user)
+		db.session.commit()
+	except Exception as e:
+		return render_template('error.html', error = str(e))
 
 	return make_json_response({'data':{'succeeded': True, 'message': "User created successfully"}}, 201)
 
@@ -48,19 +56,22 @@ def register_user():
 def login_user():
 	username = request.json.get('username')
 	password = request.json.get('password')
-	if session.get('logged_in') is None:
-		if username is None or password is None:
-			return make_json_response({'data':{'succeeded': False, 'message': "Missing required parameters"}}, 400)
-		user = User.query.filter_by(username=username).first()
-		if user is None:
-			return make_json_response({'data':{'succeeded': False, 'message': "User does not exist"}}, 400)
-		if user.check_password(password):
-			session['logged_in'] = user
-			return make_json_response({'data':{'succeeded': True, 'message': "You're logged in!"}}, 201)
+	try:
+		if session.get('logged_in') is None:
+			if username is None or password is None:
+				return make_json_response({'data':{'succeeded': False, 'message': "Missing required parameters"}}, 400)
+			user = User.query.filter_by(username=username).first()
+			if user is None:
+				return make_json_response({'data':{'succeeded': False, 'message': "User does not exist"}}, 400)
+			if user.check_password(password):
+				session['logged_in'] = user
+				return make_json_response({'data':{'succeeded': True, 'message': "You're logged in!"}}, 201)
+			else:
+				return make_json_response({'data':{'succeeded': False, 'message': "You're password is wrong"}}, 201)
 		else:
-			return make_json_response({'data':{'succeeded': False, 'message': "You're password is wrong"}}, 201)
-	else:
-		return make_json_response({'data':{'succeeded': session.get('logged_in'), 'message': "You're already logged in"}}, 201)
+			return make_json_response({'data':{'succeeded': session.get('logged_in'), 'message': "You're already logged in"}}, 201)
+	except Exception as e:
+		return render_template('error.html', error = str(e))
 
 @app.route('/api/vote', methods = ['POST'])
 # Force authentication
