@@ -26,12 +26,15 @@ def index():
 
 @app.route('/api/users', methods = ['POST'])
 def register_user():
-	username = request.json.get('username')
-	password = request.json.get('password')
-	email    = request.json.get('email')
+	username  = request.json.get('username')
+	password  = request.json.get('password')
+	password1 = request.json.get('password1')
+	email     = request.json.get('email')
 	try:
-		if username is None or password is None or email is None:
+		if username is None or password is None or password1 is None or email is None:
 			return make_json_response({'data':{'succeeded': False, 'message': "Missing required parameters"}}, 400)
+		if password != password1:
+			return make_json_response({'data':{'succeeded': False, 'message': "Passwords don't match"}}, 400)
 		username = username.lower()
 		email    = email.lower()
 		if User.query.filter_by(username=username).first() is not None:
