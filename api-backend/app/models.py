@@ -6,16 +6,16 @@ from flask import jsonify
 bcrypt = Bcrypt(app)
 
 class Site(db.Model):
-    __tablename__ = 'sites'
+	__tablename__ = 'sites'
 
-    id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(128), index=True)
+	id = db.Column(db.Integer, primary_key=True)
+	url = db.Column(db.String(128), index=True)
 
-    def __init__(self, url):
-    	self.url = url
+	def __init__(self, url):
+		self.url = url
 
-    def __repr__(self):
-    	return '<id {0} username {1}>'.format(self.id, self.url)
+	def __repr__(self):
+		return '<id {0} username {1}>'.format(self.id, self.url)
 
 class User(db.Model):
 	__tablename__ = 'users'
@@ -71,7 +71,7 @@ class Comment(db.Model):
 		self.site_id = site_id
 		self.user_id = user_id
 		self.comment = comment
-                self.reply_to = reply_to
+		self.reply_to = reply_to
 		self.time_stamp = time.time()
 
 	def __repr__(self):

@@ -141,6 +141,32 @@ def vote():
 	db.session.commit()
 	return make_json_response({'data':{'succeeded': True, 'message': "Vote created succesfully"}}, 201)
 
+@app.route('/api/comment', methods = ['POST'])
+def comment():
+	if not 'username' in session:
+		return make_json_response({'data':{'succeeded': False, 'message':"You must be logged in to comment"}}, 403)
+	url = normalize_url(request.json.get('url'))
+	user = User.query.filter_by(username = escape(session['username'])).first()
+	if user is None:
+		logout()
+		return make_json_response({'data':{'succeeded': False, 'message':"Invalid user session, please try logging in again"}}, 403)
+	text = request.json.get('comment')
+	reply_to = request.json.get('reply-to')
+	if reply_to == "":
+		reply_to = -1
+	else:
+		reply_to = int(reply_to)
+	site = Site.query.filter_by(url=url).first()
+	if site is None:
+		new_site = Site(url=url)
+		db.session.add(new_site)
+		db.session.commit()
+		site = new_site
+	comment = Comment(site.id, user.id, text, reply_to)
+	db.session.add(comment)
+	db.session.commit()
+	return make_json_response({'data':{'succeeded': True, 'message': "Comment created succesfully"}}, 201)
+
 @app.route('/api/comments/<path:url>', methods = ['GET'])
 def comments(url):
 	url = normalize_url(url)
