@@ -1,6 +1,7 @@
 from app import app, db
 from flask.ext.bcrypt import Bcrypt
 import datetime
+from flask import jsonify
 
 bcrypt = Bcrypt(app)
 
@@ -14,7 +15,7 @@ class Site(db.Model):
     	self.url = url.lower()
 
     def __repr__(self):
-    	return '<id {} url {}>'.format(self.id, self.url)
+    	return '<id {0} username {1}>'.format(self.id, self.url)
 
 class User(db.Model):
 	__tablename__ = 'users'
