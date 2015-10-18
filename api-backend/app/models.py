@@ -1,6 +1,6 @@
 from app import app, db
 from flask.ext.bcrypt import Bcrypt
-import datetime
+import time
 from flask import jsonify
 
 bcrypt = Bcrypt(app)
@@ -52,7 +52,7 @@ class Vote(db.Model):
 		self.site_id = site_id
 		self.user_id = user_id
 		self.upvote = upvote
-		self.time_stamp = datetime.utcnow()
+		self.time_stamp = time.time()
 
 	def __repr__(self):
 		return '<id {}>'.format(self.id)
@@ -72,7 +72,7 @@ class Comment(db.Model):
 		self.user_id = user_id
 		self.comment = comment
                 self.reply_to = reply_to
-		self.time_stamp = datetime.utcnow()
+		self.time_stamp = time.time()
 
 	def __repr__(self):
 		return '<id {}>'.format(self.id)

@@ -134,7 +134,7 @@ def vote():
 		site = new_site
 	vote = Vote(site.id, user.id, upvote)
 	db.session.add(vote)
-	db.session.commmit()
+	db.session.commit()
 
 	return make_json_response({'data':{'succeeded': True, 'message': "Vote created succesfully"}}, 201)
 
@@ -174,12 +174,12 @@ def check():
 	return make_json_response({'data':{'succeeded': True, 'logged_in':True}}, 201)
 
 @app.route('/api/site/<path:url>', methods=['GET'])
-def get(url):
+def get_votes(url):
 	url = normalize_url(url)
 	site = Site(url=url)
 	if exists_site(site):
 		site_id = get_site_id(site)
-		votes = Votes.query(site_id = site_id).all()
+		votes = Vote.query.filter_by(site_id = site_id).all()
 		score = 0
 		for vote in votes:
 			if vote.upvote:
