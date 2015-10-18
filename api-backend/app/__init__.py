@@ -19,7 +19,7 @@ check_environment()"""
 
 app = Flask(__name__)
 app.secret_key = "u'^z8aXeQ@<Q4z%"
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://postgres:password1234@localhost:5432/boilermake"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://boiler:password@localhost:5432/boilermake"
 db = SQLAlchemy(app)
 
 from models import *

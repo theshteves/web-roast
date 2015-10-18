@@ -3,6 +3,7 @@ body {
     font: 'Hind' sans-serif;
     padding: 0;
     margin: 0;
+    min-width: 400px;
     min-height: 315px;
 }
 
@@ -37,6 +38,10 @@ input:focus::-webkit-input-placeholder {
     color: #ACF0F2;
 }
 
+textarea:focus::-webkit-input-placeholder {
+    color: #ACF0F2;
+}
+
 :-moz-placeholder { /* Firefox 18- */
     color: #225378;
     font-size: 17px;
@@ -59,6 +64,10 @@ input:focus::-moz-placeholder {
     color: #ACF0F2;
 }
 
+textarea:focus::-moz-placeholder {
+    color: #ACF0F2;
+}
+
 :-ms-input-placeholder {
     color: #225378;
     font-size: 17px;
@@ -67,6 +76,10 @@ input:focus::-moz-placeholder {
 }
 
 input:focus:-ms-input-placeholder {
+    color: #ACF0F2;
+}
+
+textarea:focus:-ms-input-placeholder {
     color: #ACF0F2;
 }
 
@@ -82,7 +95,7 @@ input {
     font-weight: 600;
     font-size: 17px;
     color: #225378;
-    width: 200px;
+    width: 300px;
     height: 54px;
     margin-top: 15px;
     -webkit-transition: all 0.30s ease-in-out;
@@ -94,6 +107,31 @@ input {
     margin-right: 10px;
 }
 
+textarea {
+    border-radius: 3px;
+    border-style: none;
+    background-color: #ACF0F2;
+    box-shadow: 0 0 5px transparent;
+    border: 1px solid transparent;
+    padding-left: 15px;
+    font-family: 'Hind';
+    font-weight: 620;
+    font-size: 17px;
+    color: #225378;
+    width: 613px;
+    height: 54px;
+    margin-top: 15px;
+	display:inline-block;
+	vertical-align:middle;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    padding-top: 15px;
+    margin-left: 10px;
+}
+
 input[type=text]:focus,
 input[type=password]:focus,
 textarea:focus {
@@ -102,7 +140,7 @@ textarea:focus {
     color: #ACF0F2;
 }
 
-#login-submit, #register-submit {
+#login-submit, #register-submit, #comment-submit {
     border-radius: 3px;
     border-style: none;
     background-color: #FFAD0F;
@@ -114,7 +152,7 @@ textarea:focus {
     font-weight: 600;
     font-size: 17px;
     color: #F2FFE3;
-    width: 200px;
+    width: 300px;
     height: 54px;
     margin-top: 15px;
     -webkit-transition: all 0.50s ease-in-out;
@@ -123,7 +161,7 @@ textarea:focus {
     -o-transition: all 0.50s ease-in-out;
 }
 
-#login-submit:hover, #register-submit:hover {
+#login-submit:hover, #register-submit:hover, #comment-submit:hover {
     background-color: rgba(255, 173, 15, .8);
 }
 
@@ -131,7 +169,7 @@ textarea:focus {
 	margin-bottom: 40px;
 }
 
-#register-username {
+#register-username, #comment {
 	margin-top: 35px;
 }
 
@@ -152,4 +190,12 @@ textarea:focus {
 
 ul {
     background-color: #1595A3;
+}
+
+#com-nav {
+	border-left: 0px none transparent;
+}
+
+#make-comment {
+	margin-top: 75px;
 }
