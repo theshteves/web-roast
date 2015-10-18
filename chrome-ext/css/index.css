@@ -39,26 +39,25 @@ body {
 }
 
 .vote {
-    background-color: #ACF0F2;
-    margin-bottom: -20px;
-    padding-bottom: -100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #1595A3;
+    margin-bottom: -10px;
     min-height: 100px;
     max-height: 150px;
 }
 
-.vote > h3 {
+.vote > h1 {
     position: relative;
-    left: 25px;
-    top: 0px;
-    font-weight: 100;
+    font-weight: 900;
 }
 
 #vote+ {
     position: relative;
-    top: 25px;
 }
 
 #vote- {
     position: relative;
-    top: 75px;
 }
