@@ -1,5 +1,5 @@
 from app import app, db
-from flask import session, request, abort, jsonify, render_template
+from flask import session, request, abort, jsonify, render_template, escape
 from models import *
 
 def normalize_url(url):
@@ -102,11 +102,14 @@ def login_user():
 		return handle_invalid_response(e) #raise InvalidUsage('This view is gone', status_code=410)
 
 @app.route('/api/vote', methods = ['POST'])
-# Force authentication
 def vote():
+	if not 'username' in session:
+		return make_json_response({'data':{'succeeded': False, 'message':"You must be logged in to vote"}}, 403)
 	url = normalize_url(request.json.get('url'))
-	user = None
-	# user = get user somehow
+	user = User.query.filter_by(username = escape(session['usename'])).first()
+	if user is None:
+		logout()
+		return make_json_response({'data':{'succeeded': False, 'message':"Invalid user session, please try logging in again"}}, 403)
 	upvote = request.json.get('upvote')
 	site = Site.query.filter_by(url=url).first()
 	if site is None:
@@ -119,3 +122,14 @@ def vote():
 	db.session.commmit()
 
 	return make_json_response({'data':{'succeeded': True, 'message': "Vote created succesfully"}}, 201)
+
+@app.route('/api/logout', methods=['POST'])
+def logout():
+	session.pop('username', None)
+	return make_json_response({'data':{'succeeded': True, 'message': "Logged out successfully"}}, 201)
+
+@app.route('/api/check', methods=['POST'])
+def check():
+	if not 'username' in session:
+		return make_json_response({'data':{'succeeded': True, 'logged_in'=False}}, 201)
+	return return make_json_response({'data':{'succeeded': True, 'logged_in'=True}}, 201)
