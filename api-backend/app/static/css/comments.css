@@ -1,0 +1,42 @@
+html {
+    background-color: #000;
+}
+
+body {
+    margin: 0 auto;
+    width: 500px;
+    background-color: #333;
+    border-color: #000;
+    font-family: Hind;
+}
+
+.comment {
+    background-color: #ACF0F2;
+    margin-bottom: -20px;
+    padding-bottom: -100px;
+    min-height: 100px;
+    max-height: 150px;
+}
+
+.comment > h5 {
+    position: relative;
+    left: 25px;
+    top: 10px;
+    font-weight: 800;
+}
+
+.comment > h6 {
+    position: relative;
+    left: 25px;
+    top: -20px;
+    font-weight: 100;
+}
+
+.comment > h3 {
+    position: relative;
+    top: -35px;
+    left: 25px;
+    width: 90%;
+    line-height: 1.25;
+    font-weight: 200;
+}
